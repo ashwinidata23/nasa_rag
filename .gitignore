@@ -1,0 +1,41 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Virtual environments
+pharma_env/
+venv/
+.venv/
+
+# Pipeline outputs (rebuild with: python src/pipeline.py --reindex)
+db/*.db
+db/*.index
+db/page_hashes.json
+
+# Local index under src/ (if present — use root db/ after pipeline)
+src/db/*.db
+src/db/*.index
+src/db/page_hashes.json
+
+# Logs
+logs/
+
+# Optional: local PDF (add NASA handbook here; not uploaded)
+data/*.pdf
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/

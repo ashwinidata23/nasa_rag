@@ -1,0 +1,67 @@
+# ============================================================
+# IP Manual RAG Pipeline — Requirements
+# ============================================================
+# Install with: pip install -r requirements.txt
+#
+# NOTE for Windows users:
+#   Run this inside your virtual environment:
+#   venv\Scripts\activate
+#   pip install -r requirements.txt
+# ============================================================
+
+
+# --- PDF Extraction ---
+PyMuPDF==1.24.5                  # fitz — layout-aware PDF parsing, bbox coords
+# unstructured[pdf]==0.14.10       # hi-res table inference fallback
+pdfplumber==0.11.1               # backup table extractor (used in reconstructor)
+
+# --- Table & Document Processing ---
+pandas==2.2.2                    # table row manipulation
+numpy==1.26.4                    # bbox math, column clustering
+scipy==1.13.1                    # DBSCAN / spatial clustering (table ID assignment)
+scikit-learn==1.5.0              # used for column fingerprint clustering
+
+# --- Vector Store (local — no API key needed) ---
+# chromadb==0.4.24  
+faiss-cpu==1.8.0                  # local vector store, runs on your laptop
+                                 # WHY chromadb: no Pinecone account needed on
+                                 # hireathon day. Same API surface as Pinecone.
+
+# --- Embeddings + LLM ---
+openai==1.35.3                   # GPT-4o for generation + diagram extraction
+                                 # text-embedding-3-small for embeddings
+tiktoken==0.7.0                  # token counting — needed for chunk size control
+
+# --- Database (reference graph + table buffer) ---
+sqlalchemy==2.0.31               # ORM for SQLite
+# NOTE: sqlite3 is built into Python — no separate install needed
+
+# --- API Layer ---
+fastapi==0.111.0                 # REST API for chatbot queries
+uvicorn==0.30.1                  # ASGI server to run FastAPI
+python-multipart==0.0.9          # needed for FastAPI file uploads
+
+# --- Utilities ---
+python-dotenv==1.0.1             # loads .env file (OPENAI_API_KEY etc.)
+httpx==0.27.0                    # async HTTP — used for API calls
+tenacity==8.3.0                  # retry logic for API rate limits
+                                 # WHY: OpenAI API will rate-limit on large docs
+                                 # tenacity handles exponential backoff cleanly
+tqdm==4.66.4                     # progress bars for long ingestion runs
+loguru==0.7.2                    # better logging than print statements
+                                 # WHY: on hireathon day you need to see
+                                 # exactly where pipeline is at all times
+rich==13.7.1                     # pretty terminal output — makes demo look good
+pydantic==2.7.4                  # data validation for API request/response models
+
+# --- Hashing (incremental updates) ---
+xxhash==3.4.1                    # fast hashing for page content comparison
+                                 # faster than hashlib sha256 for large docs
+
+# --- Image processing (diagram extraction) ---
+Pillow==10.3.0                   # image manipulation before sending to GPT-4o
+# base64                           # built into Python — no install needed
+
+# --- Testing ---
+pytest==8.2.2                    # run tests with: pytest tests/
+pytest-asyncio==0.23.7           # async test support for FastAPI routes
