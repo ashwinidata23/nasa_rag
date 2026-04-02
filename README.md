@@ -1,12 +1,5 @@
 # Complex Technical Manual QA System
 
-**i2e Consulting Hireathon 2026 — Problem Statement 2** — reference implementation on the NASA Systems Engineering Handbook (SP-2016-6105 Rev2).
-
-
----
-
-## What This System Does
-
 A RAG (Retrieval-Augmented Generation) chatbot that answers natural language questions about the NASA Systems Engineering Handbook (SP-2016-6105 Rev2, 297 pages). Every answer is grounded in the document with verifiable page and section citations.
 
 **How you use it:** From `src`, run **`uvicorn main:app --reload --port 8000`**, then open **`chat.html`** from the project root in your browser. The page calls `http://localhost:8000/query` on your machine.
